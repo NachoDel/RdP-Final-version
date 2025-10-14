@@ -7,29 +7,25 @@ import java.util.Date;
 
 public class Log implements Runnable {
     int count;
-    Threads[] threadCreator;
-    Threads[] threadLeftLoader;
-    Threads[] threadRightLoader;
-    Threads[] threadLeftAdjusters;
-    Threads[] threadRightAdjusters;
-    Threads[] threadLeftTrimmers;
-    Threads[] threadRightTrimmers;
-    Threads[] threadExporters;
+    Threads[] SA;
+    Threads[] SB;
+    Threads[] SC;
+    Threads[] SD;
+    Threads[] SE;
+    Threads[] SF;
     final Monitor monitor;
     File file;
     File file1;
     final Long INITIAL_TIME = System.currentTimeMillis();
     static Log instance;
 
-    public Log(Threads[] threadCreator, Threads[] threadLeftLoader, Threads[] threadRightLoader, Threads[] threadLeftAdjusters, Threads[] threadRightAdjusters, Threads[] threadLeftTrimmers, Threads[] threadRightTrimmers, Threads[] threadExporters, Monitor monitor){
-        this.threadCreator = threadCreator;
-        this.threadLeftLoader = threadLeftLoader;
-        this.threadRightLoader = threadRightLoader;
-        this.threadLeftAdjusters = threadLeftAdjusters;
-        this.threadRightAdjusters = threadRightAdjusters;
-        this.threadLeftTrimmers = threadLeftTrimmers;
-        this.threadRightTrimmers = threadRightTrimmers;
-        this.threadExporters = threadExporters;
+    public Log(Threads[] SA, Threads[] SB, Threads[] SC, Threads[] SD, Threads[] SE, Threads[] SF, Monitor monitor){
+        this.SA = SA;
+        this.SB = SB;
+        this.SC = SC;
+        this.SD = SD;
+        this.SE = SE;
+        this.SF = SF;
         this.monitor = monitor;
         count = 0;
 
@@ -100,37 +96,32 @@ public class Log implements Runnable {
             FileWriter writer = new FileWriter(file, true);
             try {
                 Long currentTime = System.currentTimeMillis();
+                //QUE ES LO QUE SE PONE EN LUGAR DE "monitor.getRdp().getFiredCounter()[3] + monitor.getRdp().getFiredCounter()[4]"?
                 writer.write("Iteración: " + count + " tiempo: " + (currentTime - INITIAL_TIME) + "ms\n");
-                writer.write("Imagenes creadas: "+ monitor.getRdp().getFiredCounter()[0] +"\n");
-                writer.write("Imagenes cargadas: "+ (monitor.getRdp().getFiredCounter()[3] + monitor.getRdp().getFiredCounter()[4])  +"\n");
-                writer.write("Imagenes ajustadas: "+ (monitor.getRdp().getFiredCounter()[9] + monitor.getRdp().getFiredCounter()[10]) +"\n");
-                writer.write("Imagenes recortadas: "+ (monitor.getRdp().getFiredCounter()[13] + monitor.getRdp().getFiredCounter()[14]) +"\n");
-                writer.write("Imagenes exportadas: "+ monitor.getRdp().getFiredCounter()[16] +"\n");
-                writer.write("Balance T11 y T12: "+ (monitor.getRdp().getFiredCounter()[11] + " , " +  monitor.getRdp().getFiredCounter()[12]) +"\n");
+                writer.write("Clientes ingresados y en sala de espera: "+ monitor.getRdp().getFiredCounter()[1] +"\n");
+                writer.write("Clientes atendidos: "+ (monitor.getRdp().getFiredCounter()[5] + monitor.getRdp().getFiredCounter()[4]) + "\n");
+                writer.write("Atendidos por la Mesa 1: "+ (monitor.getRdp().getFiredCounter()[5] + " , Atendidos por la Mesa 2: " + monitor.getRdp().getFiredCounter()[4]) +"\n");
+                writer.write("Clientes con la reserva confirmada y pagada: "+ (monitor.getRdp().getFiredCounter()[10]) +"\n");
+                writer.write("Clientes con la reserva cancelado: "+ (monitor.getRdp().getFiredCounter()[8]) +"\n");
+                writer.write("Clientes retirados: "+ monitor.getRdp().getFiredCounter()[11] +"\n");
                 //writer.write(monitor.getBalanceCount() +"\n");
 
-                for (Threads thread: threadCreator){
+                for (Threads thread: SA){
                     writer.write("Hilo: "+thread.getName() +". Estado: "+thread.getState()+"\n");
                 }
-                for (Threads thread: threadLeftLoader){
+                for (Threads thread: SB){
                     writer.write("Hilo: "+thread.getName() +". Estado: "+thread.getState()+"\n");
                 }
-                for (Threads thread: threadRightLoader){
+                for (Threads thread: SC){
                     writer.write("Hilo: "+thread.getName() +". Estado: "+thread.getState()+"\n");
                 }
-                for (Threads thread: threadLeftAdjusters){
+                for (Threads thread: SD){
                     writer.write("Hilo: "+thread.getName() +". Estado: "+thread.getState()+"\n");
                 }
-                for (Threads thread: threadRightAdjusters){
+                for (Threads thread: SE){
                     writer.write("Hilo: "+thread.getName() +". Estado: "+thread.getState()+"\n");
                 }
-                for (Threads thread: threadLeftTrimmers){
-                    writer.write("Hilo: "+thread.getName() +". Estado: "+thread.getState()+"\n");
-                }
-                for (Threads thread: threadRightTrimmers){
-                    writer.write("Hilo: "+thread.getName() +". Estado: "+thread.getState()+"\n");
-                }
-                for (Threads thread: threadExporters){
+                for (Threads thread: SF){
                     writer.write("Hilo: "+thread.getName() +". Estado: "+thread.getState()+"\n");
                 }
                 writer.write("\n\n");

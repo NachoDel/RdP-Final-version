@@ -4,172 +4,132 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        // Límite máximo de disparos para la transición 0
-        int maxFiresForT0 = 200;
 
-        // Número de threads que ejecutan cada tarea. Idealmente todos son 1.
-        int creatorThreads = 1;
-        int loaderThreadsLeft = 1;
-        int loaderThreadsRight = 1;
-        int adjustersThreadsLeft = 1;
-        int adjustersThreadsRight = 1;
-        int trimmersThreadsLeft = 1;
-        int trimmersThreadsRight = 1;
-        int exportersThreads = 1;
+        // MAXIMUM NUMBER OF SHOTS (T0)
+        int maxFires = 186;
 
-        // Declaramos las transiciones que dispara cada hilo en orden
+        // THREADS THAT EXECUTE EACH TASK
+        int thread1 = 1;
+        int thread2 = 1;
+        int thread3 = 1;
+        int thread4 = 1;
+        int thread5 = 1;
+        int thread6 = 1;
 
-        /// CREADOR = T0
-        List<Integer> creatorTransitions = new ArrayList<>();
-        creatorTransitions.add(0);
+        // TRANSITIONS THAT EACH THREAD TRIGGERS
+        /// SA (T0, T1)
+        List<Integer> segmentA = new ArrayList<>();
+        segmentA.add(0);
+        segmentA.add(1);
 
-        /// LOADER LEFT = T1 -> T3
-        List<Integer> leftLoaderTransitions = new ArrayList<>();
-        leftLoaderTransitions.add(1);
-        leftLoaderTransitions.add(3);
+        /// SB (T2, T5)
+        List<Integer> segmentB = new ArrayList<>();
+        segmentB.add(2);
+        segmentB.add(5);
 
-        /// LOADER RIGHT = T3 -> T4
-        List<Integer> rightLoaderTransitions = new ArrayList<>();
-        rightLoaderTransitions.add(2);
-        rightLoaderTransitions.add(4);
+        /// SC (T3, T4)
+        List<Integer> segmentC = new ArrayList<>();
+        segmentC.add(3);
+        segmentC.add(4);
 
-        /// ADJUSTER LEFT = T5 -> T7 -> T9
-        List<Integer> leftAdjusterTransitions = new ArrayList<>();
-        leftAdjusterTransitions.add(5);
-        leftAdjusterTransitions.add(7);
-        leftAdjusterTransitions.add(9);
+        /// SD (T6, T9, T10)
+        List<Integer> segmentD = new ArrayList<>();
+        segmentD.add(6);
+        segmentD.add(9);
+        segmentD.add(10);
 
-        /// ADJUSTER RIGHT = T6 -> T8 -> T10
-        List<Integer> rightAdjusterTransitions = new ArrayList<>();
-        rightAdjusterTransitions.add(6);
-        rightAdjusterTransitions.add(8);
-        rightAdjusterTransitions.add(10);
+        /// SE (T7, T8)
+        List<Integer> segmentE = new ArrayList<>();
+        segmentE.add(7);
+        segmentE.add(8);
 
-        /// TRIMMER LEFT = T11 -> T13
-        List<Integer> leftTrimmerTransitions = new ArrayList<>();
-        leftTrimmerTransitions.add(11);
-        leftTrimmerTransitions.add(13);
+        /// SF (T11)
+        List<Integer> segmentF = new ArrayList<>();
+        segmentF.add(11);
 
-        /// TRIMMER RIGHT = T12 -> T14
-        List<Integer> rightTrimmerTransitions = new ArrayList<>();
-        rightTrimmerTransitions.add(12);
-        rightTrimmerTransitions.add(14);
-
-        /// EXPORTER = T15 -> T16
-        List<Integer> exporterTransitions = new ArrayList<>();
-        exporterTransitions.add(15);
-        exporterTransitions.add(16);
-
-        // Inicializamos el monitor con la política y la RDP
-        Rdp rdp = new Rdp(maxFiresForT0);
-        Policy policy = new Policy(true);   // true es equitativo, false es 8020
+        // INITIALIZING THE MONITOR WITH POLICY AND RDP
+        Rdp rdp = new Rdp(maxFires);
+        Policy policy = new Policy(true);   // true es equitativo, false es priorizada
         Monitor monitor = new Monitor(rdp, policy);
 
-        // Creamos arreglos para cada tipo de thread
-        Threads[] creators = new Threads[creatorThreads];
-        Threads[] loadersLeft = new Threads[loaderThreadsLeft];
-        Threads[] loadersRight = new Threads[loaderThreadsRight];
-        Threads[] adjustersLeft = new Threads[adjustersThreadsLeft];
-        Threads[] adjustersRight = new Threads[adjustersThreadsRight];
-        Threads[] trimmersLeft = new Threads[trimmersThreadsLeft];
-        Threads[] trimmersRight = new Threads[trimmersThreadsRight];
-        Threads[] exporters = new Threads[exportersThreads];
+        // ARRANGEMENTS TO SET TRANSITIONS TO EACH THREADS
+        Threads[] SA = new Threads[thread1];
+        Threads[] SB = new Threads[thread2];
+        Threads[] SC = new Threads[thread3];
+        Threads[] SD = new Threads[thread4];
+        Threads[] SE = new Threads[thread5];
+        Threads[] SF = new Threads[thread6];
 
-        // Creamos los threads
-
-        /// CREATORS
-        for (int i = 0; i < creatorThreads; i++){
-            creators[i] = new Threads(creatorTransitions, monitor);
-            creators[i].setName("Creator " + i);
+        // ASSIGNING TRANSITIONS TO THREADS
+        /// SA
+        for (int i = 0; i < thread1; i++){
+            SA[i] = new Threads(segmentA, monitor);
+            SA[i].setName("SA " + i);
         }
 
-        /// LOADERS LEFT
-        for (int i = 0; i < loaderThreadsLeft; i++){
-            loadersLeft[i] = new Threads(leftLoaderTransitions, monitor);
-            loadersLeft[i].setName("Loader left " + i);
+        /// SB
+        for (int i = 0; i < thread2; i++){
+            SB[i] = new Threads(segmentB, monitor);
+            SB[i].setName("SB " + i);
         }
 
-        /// LOADERS RIGHT
-        for (int i = 0; i < loaderThreadsRight; i++){
-            loadersRight[i] = new Threads(rightLoaderTransitions, monitor);
-            loadersRight[i].setName("Loader right " + i);
+        /// SC
+        for (int i = 0; i < thread3; i++){
+            SC[i] = new Threads(segmentC, monitor);
+            SC[i].setName("SC " + i);
         }
 
-        /// ADJUSTERS LEFT
-        for (int i = 0; i < adjustersThreadsLeft; i++){
-            adjustersLeft[i] = new Threads(leftAdjusterTransitions, monitor);
-            adjustersLeft[i].setName("Adjuster left " + i);
+        /// SD
+        for (int i = 0; i < thread4; i++){
+            SD[i] = new Threads(segmentD, monitor);
+            SD[i].setName("SD " + i);
         }
 
-        /// ADJUSTERS RIGHT
-        for (int i = 0; i < adjustersThreadsRight; i++){
-            adjustersRight[i] = new Threads(rightAdjusterTransitions, monitor);
-            adjustersRight[i].setName("Adjuster right " + i);
+        /// SE
+        for (int i = 0; i < thread5; i++){
+            SE[i] = new Threads(segmentE, monitor);
+            SE[i].setName("SE " + i);
         }
 
-        /// TRIMMERS LEFT
-        for (int i = 0; i < trimmersThreadsLeft; i++){
-            trimmersLeft[i] = new Threads(leftTrimmerTransitions, monitor);
-            trimmersLeft[i].setName("Trimmer left" + i);
+        /// SF
+        for (int i = 0; i < thread6; i++){
+            SF[i] = new Threads(segmentF, monitor);
+            SF[i].setName("SF " + i);
         }
 
-        /// TRIMMERS RIGHT
-        for (int i = 0; i < trimmersThreadsRight; i++){
-            trimmersRight[i] = new Threads(rightTrimmerTransitions, monitor);
-            trimmersRight[i].setName("Trimmer right" + i);
-        }
-
-        /// EXPORTERS
-        for (int i = 0; i < exportersThreads; i++){
-            exporters[i] = new Threads(exporterTransitions, monitor);
-            exporters[i].setName("Exporter " + i);
-        }
-
-        // Inicializamos el hilo logger
-        Log logger = new Log(creators, loadersLeft, loadersRight, adjustersLeft, adjustersRight, trimmersLeft, trimmersRight, exporters, monitor);
+        // INITIALIZING A THREAD FOR LOGGING
+        Log logger = new Log(SA, SB, SC, SD, SE, SF, monitor);
         new Thread(logger).start();
 
-        // Los hilos inician sus tareas
-
-        /// CREATORS
-        for (int i = 0; i < creatorThreads; i++){
-            creators[i].start();
+        // START TASKS FOR EACH THREAD
+        /// SA
+        for (int i = 0; i < thread1; i++){
+            SA[i].start();
         }
 
-        /// LOADERS LEFT
-        for (int i = 0; i < loaderThreadsLeft; i++){
-            loadersLeft[i].start();
+        /// SB
+        for (int i = 0; i < thread2; i++){
+            SB[i].start();
         }
 
-        /// LOADERS RIGHT
-        for (int i = 0; i < loaderThreadsRight; i++){
-            loadersRight[i].start();
+        /// SC
+        for (int i = 0; i < thread3; i++){
+            SC[i].start();
         }
 
-        /// ADJUSTERS LEFT
-        for (int i = 0; i < adjustersThreadsLeft; i++){
-            adjustersLeft[i].start();
+        /// SD
+        for (int i = 0; i < thread4; i++){
+            SD[i].start();
         }
 
-        /// ADJUSTERS RIGHT
-        for (int i = 0; i < adjustersThreadsRight; i++){
-            adjustersRight[i].start();
+        /// SE
+        for (int i = 0; i < thread5; i++){
+            SE[i].start();
         }
 
-        /// TRIMMERS LEFT
-        for (int i = 0; i < trimmersThreadsLeft; i++){
-            trimmersLeft[i].start();
-        }
-
-        /// TRIMMERS RIGHT
-        for (int i = 0; i < trimmersThreadsRight; i++){
-            trimmersRight[i].start();
-        }
-
-        /// EXPORTERS
-        for (int i = 0; i < exportersThreads; i++){
-            exporters[i].start();
+        /// SF
+        for (int i = 0; i < thread6; i++){
+            SF[i].start();
         }
     }
-
 }

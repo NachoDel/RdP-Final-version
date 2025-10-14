@@ -17,7 +17,7 @@ public class Threads extends Thread {
                 while (!monitor.fireTransition(transition))
                 {
                     if (monitor.areInvariantsCompleted()) {
-                        System.out.println("Hilo manejando las transiciones " + transitions + " termina dado invariantes completadas.");
+                        System.out.println("Hilo manejando las transiciones " + transitions + " con invariantes completadas.");
                         return;
                     }
                 }
