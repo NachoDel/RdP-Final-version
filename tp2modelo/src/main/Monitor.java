@@ -1,11 +1,11 @@
 package main;
+import interfaces.MonitorInterface;
+import static java.lang.Thread.sleep;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Semaphore;
 
-import static java.lang.Thread.sleep;
-
-public class Monitor {
+public class Monitor implements MonitorInterface {
     private final Rdp rdp;
     private final Semaphore mutex;
     private boolean allInvariantsCompleted;
@@ -20,7 +20,7 @@ public class Monitor {
         this.policy = policy;
         allInvariantsCompleted = false;
 
-        for (int i = 0; i < rdp.transitionsNo; i++){
+        for (int i = 0; i < rdp.transitions; i++){ //aca salia "transitionsNo". Asumí que era el numero de transiciones
             transitionLocks.add(new Semaphore(0));
             timedQueued.add(false);
             threadsOnQueue.add(0);
@@ -63,6 +63,7 @@ public class Monitor {
         timedQueued.set(transition, false);
     }
 
+    @Override
     public Boolean fireTransition(Integer transition) {
         try {
             mutex.acquire();
@@ -153,10 +154,12 @@ public class Monitor {
         }
     }
 
+    @Override
     public boolean areInvariantsCompleted() {
         return allInvariantsCompleted;
     }
 
+    @Override
     public Rdp getRdp(){
         return rdp;
     }
