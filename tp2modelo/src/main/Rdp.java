@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Rdp {
-    public int transitions = 17;
+    public int transitions = 12;
     public int places = 15;
 
     private final double[][] incidenceMatrix = {
@@ -93,7 +93,7 @@ public class Rdp {
     }
 
     public boolean completedInvariants() {
-        return firedCount[16] >= maxInvariant;
+        return firedCount[11] >= maxInvariant;
     }
 
     private void testPlaceInvariant() {
