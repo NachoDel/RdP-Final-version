@@ -20,17 +20,30 @@ public class Policy {
             case 1:
                 return transitions.get(0);
             case 2:
-                if (transitions.contains(11) && transitions.contains(12)) {
+                if (transitions.contains(2) && transitions.contains(3)) {
                     if (policyTypeEquitative){
                         if (probability <= 0.5){
-                            return 11;
-                        } else return 12;
+                            return 2;
+                        } else return 3 ;
+
+                    } 
+                        else {
+                            if (probability <= 0.75){
+                                return 2;
+                            } else return 3;
+                        }
+                }
+                else if (transitions.contains(6) && transitions.contains(7)) {
+                    if (policyTypeEquitative){
+                        if (probability <= 0.5){
+                            return 6;
+                        } else return 7;
 
                     } 
                         else {
                             if (probability <= 0.8){
-                                return 11;
-                            } else return 12;
+                                return 6;
+                            } else return 7;
                         }
                 }
             default:
