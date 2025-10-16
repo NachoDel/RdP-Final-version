@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Rdp {
     public int transitions = 17;
-    public int places = 14;
+    public int places = 15;
 
     private final double[][] incidenceMatrix = {
         // t0  t1  t2   t3  t4  t5  t6  t7  t8  t9  t10 t11
@@ -120,59 +120,85 @@ public class Rdp {
                 if (isEnabled(1)==0){
                     lista.add(1);
                 }
+                break;
+            case 1:
+                if (isEnabled(0)==0){
+                    lista.add(0);
+                }
                 if (isEnabled(2)==0){
                     lista.add(2);
                 }
-                break;
-            case 1:
                 if (isEnabled(3)==0){
                     lista.add(3);
                 }
                 break;
             case 2:
+                if (isEnabled(0)==0){
+                    lista.add(0);
+                }
+                if (isEnabled(5)==0){
+                    lista.add(5);
+                }
+                break;
+            case 3:
+                if (isEnabled(0)==0){
+                    lista.add(0);
+                }
                 if (isEnabled(4)==0){
                     lista.add(4);
                 }
                 break;
-            case 3, 4:
-                if (isEnabled(5)==0){
-                    lista.add(5);
+            case 4:
+                if (isEnabled(3)==0){
+                    lista.add(3);
                 }
                 if (isEnabled(6)==0){
                     lista.add(6);
                 }
+                if (isEnabled(7)==0){
+                    lista.add(7);
+                }
                 break;
             case 5:
+                if (isEnabled(2)==0){
+                    lista.add(2);
+                }
+                if (isEnabled(6)==0){
+                    lista.add(6);
+                }
                 if (isEnabled(7)==0){
                     lista.add(7);
                 }
                 break;
             case 6:
-                if (isEnabled(8)==0){
-                    lista.add(8);
-                }
-                break;
-            case 7:
                 if (isEnabled(9)==0){
                     lista.add(9);
                 }
                 break;
-            case 8:
+            case 7:
+                if (isEnabled(8)==0){
+                    lista.add(8);
+                }
+                break;
+            case 8, 10:
+                if (isEnabled(6)==0){
+                    lista.add(6);
+                }
+                if (isEnabled(7)==0){
+                    lista.add(7);
+                }
+                if (isEnabled(11)==0){
+                    lista.add(11);
+                }
+                break;
+            case 9:
                 if (isEnabled(10)==0){
                     lista.add(10);
                 }
                 break;
-            case 9, 10:
-                if (isEnabled(11)==0){
-                    lista.add(11);
-                }
-                if (isEnabled(12)==0){
-                    lista.add(12);
-                }
-                break;
             case 11:
-                if (isEnabled(13)==0){
-                    lista.add(13);
+                if (isEnabled(0)==0){
+                    lista.add(0);
                 }
                 break;
             default:
