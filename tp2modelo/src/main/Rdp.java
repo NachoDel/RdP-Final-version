@@ -30,7 +30,7 @@ public class Rdp {
 
     private final double[] initialMarking = {5, 1, 0, 0, 5, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0};
     private final List<Integer> transitionSleepTime = Collections.unmodifiableList(
-        Arrays.asList(100 , 0 , 0 , 100, 100, 0, 0, 100, 100, 100, 100, 0)
+        Arrays.asList(0 , 0 , 0 , 0, 0, 0, 0, 0, 0, 0, 0, 0)
     );
 
     private final long[] transitionTime = new long[transitions];
@@ -122,9 +122,6 @@ public class Rdp {
                 }
                 break;
             case 1:
-                if (isEnabled(0)==0){
-                    lista.add(0);
-                }
                 if (isEnabled(2)==0){
                     lista.add(2);
                 }
@@ -133,36 +130,16 @@ public class Rdp {
                 }
                 break;
             case 2:
-                if (isEnabled(0)==0){
-                    lista.add(0);
-                }
                 if (isEnabled(5)==0){
                     lista.add(5);
                 }
                 break;
             case 3:
-                if (isEnabled(0)==0){
-                    lista.add(0);
-                }
                 if (isEnabled(4)==0){
                     lista.add(4);
                 }
                 break;
-            case 4:
-                if (isEnabled(3)==0){
-                    lista.add(3);
-                }
-                if (isEnabled(6)==0){
-                    lista.add(6);
-                }
-                if (isEnabled(7)==0){
-                    lista.add(7);
-                }
-                break;
-            case 5:
-                if (isEnabled(2)==0){
-                    lista.add(2);
-                }
+            case 4, 5:
                 if (isEnabled(6)==0){
                     lista.add(6);
                 }
@@ -181,12 +158,6 @@ public class Rdp {
                 }
                 break;
             case 8, 10:
-                if (isEnabled(6)==0){
-                    lista.add(6);
-                }
-                if (isEnabled(7)==0){
-                    lista.add(7);
-                }
                 if (isEnabled(11)==0){
                     lista.add(11);
                 }
