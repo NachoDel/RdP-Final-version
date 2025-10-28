@@ -49,7 +49,7 @@ public class Main {
 
         // INITIALIZING THE MONITOR WITH POLICY AND RDP
         Rdp rdp = new Rdp(maxFires);
-        Policy policy = new Policy(true);   // true es equitativo, false es priorizada
+        Policy policy = new Policy(false);   // true es equitativo, false es priorizada
         Monitor monitor = new Monitor(rdp, policy);
 
         // ARRANGEMENTS TO SET TRANSITIONS TO EACH THREADS
@@ -131,5 +131,20 @@ public class Main {
         for (int i = 0; i < thread6; i++){
             SF[i].start();
         }
+    // Esperar a que terminen todos los hilos de SA..SF
+        try {
+            for (Threads t : SA) if (t != null) t.join();
+            for (Threads t : SB) if (t != null) t.join();
+            for (Threads t : SC) if (t != null) t.join();
+            for (Threads t : SD) if (t != null) t.join();
+            for (Threads t : SE) if (t != null) t.join();
+            for (Threads t : SF) if (t != null) t.join();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            // manejar interrupción si es necesario
+        }
+    System.out.println("Picked 2: " + policy.getPicked2());
+    System.out.println("Picked 3: " + policy.getPicked3());
     }
+    
 }

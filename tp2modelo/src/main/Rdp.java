@@ -30,7 +30,7 @@ public class Rdp {
 
     private final double[] initialMarking = {5, 1, 0, 0, 5, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0};
     private final List<Integer> transitionSleepTime = Collections.unmodifiableList(
-        Arrays.asList(0 , 0 , 0 , 0, 0, 0, 0, 0, 0, 0, 0, 0)
+        Arrays.asList(0 , 0 , 0 , 0 , 0, 0, 0, 0, 0, 0, 0, 0)
     );
 
     private final long[] transitionTime = new long[transitions];
