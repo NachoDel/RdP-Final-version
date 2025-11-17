@@ -99,7 +99,8 @@ public class Main {
 
         // INITIALIZING A THREAD FOR LOGGING
         Log logger = new Log(SA, SB, SC, SD, SE, SF, monitor);
-        new Thread(logger).start();
+        Thread logThread = new Thread(logger);
+        logThread.start();
 
         // START TASKS FOR EACH THREAD
         /// SA
@@ -131,5 +132,27 @@ public class Main {
         for (int i = 0; i < thread6; i++){
             SF[i].start();
         }
+
+        // --- Esperar a que terminen todos los hilos, para mostrar tiempo FINAL de ejecucion ---
+        try {
+            // join a todos los threads de trabajo
+            for (Threads t : SA) if (t != null) t.join();
+            for (Threads t : SB) if (t != null) t.join();
+            for (Threads t : SC) if (t != null) t.join();
+            for (Threads t : SD) if (t != null) t.join();
+            for (Threads t : SE) if (t != null) t.join();
+            for (Threads t : SF) if (t != null) t.join();
+
+            // join al hilo del logger
+            if (logThread != null) logThread.join();
+
+            // Al finalizar todo, escribir/mostrar el tiempo total
+            Log.getInstance().writeTotalTimeAndPrint();
+
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            System.out.println("Main interrumpido mientras esperaba hilos.");
+        }
+
     }
 }
