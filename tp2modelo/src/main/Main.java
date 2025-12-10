@@ -99,7 +99,8 @@ public class Main {
 
         // INITIALIZING A THREAD FOR LOGGING
         Log logger = new Log(SA, SB, SC, SD, SE, SF, monitor);
-        new Thread(logger).start();
+        Thread logThread = new Thread(logger);
+        logThread.start();
 
         // START TASKS FOR EACH THREAD
         /// SA
@@ -143,8 +144,19 @@ public class Main {
             Thread.currentThread().interrupt();
             // manejar interrupción si es necesario
         }
-    System.out.println("Picked 2: " + policy.getPicked2());
-    System.out.println("Picked 3: " + policy.getPicked3());
+        // Esperar también al hilo del logger
+        try {
+            logThread.join();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+
+        // Escribir tiempo total en el log y en consola
+        Log.getInstance().writeTotalTimeAndPrint();
+
+        // Mostrar métricas de políticas
+        System.out.println("Picked 2: " + policy.getPicked2());
+        System.out.println("Picked 3: " + policy.getPicked3());
     }
     
 }

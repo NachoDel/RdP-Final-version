@@ -172,4 +172,23 @@ public class Log implements Runnable {
             throw new RuntimeException(e);
         }
     }
+
+    public void writeTotalTimeAndPrint() {
+        long totalMs = System.currentTimeMillis() - INITIAL_TIME;
+
+        // Escribir en archivo principal (append)
+        try (FileWriter writer = new FileWriter(file, true)) {
+            writer.write("\n-----------------------------------------\n");
+            writer.write("Tiempo total de ejecución: " + totalMs + " ms\n");
+            writer.write("-----------------------------------------\n\n");
+        } catch (IOException e) {
+            System.out.println("Problema al escribir el tiempo total en el archivo de LOG.");
+        }
+
+        // Mostrar en consola
+        System.out.println("\n=========================================");
+        System.out.println("Tiempo total de ejecución: " + totalMs + " ms");
+        System.out.println("=========================================\n");
+    }
+
 }
