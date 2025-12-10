@@ -1,6 +1,6 @@
 package main;
-import java.util.Random;
 import java.util.List;
+import java.util.Random;
 
 public class Policy {
 
@@ -8,6 +8,8 @@ public class Policy {
     private final Random rand = new Random();
     private static Integer pick2 = 0;
     private static Integer pick3 = 0;
+    private static Integer pick6 = 0;
+    private static Integer pick7 = 0;
 
     public Policy(boolean a){
         policyTypeEquitative = a;
@@ -72,24 +74,35 @@ public class Policy {
         double probability = rand.nextDouble();
         if (policyTypeEquitative){
             if(probability>=0.5){
+                pick6++;
                 return 6;
             } else {
+                pick7++;
                 return 7;
             }
         }
         else {
             if(probability<= 0.8){
+                pick6++;
                 return 6;
             } else {
+                pick7++;
                 return 7;
             }
         }
     }
+
     public Integer getPicked2(){
         return pick2;
     }
     public Integer getPicked3(){
         return pick3;
+    }
+    public Integer getPicked6(){
+        return pick6;
+    }
+    public Integer getPicked7(){
+        return pick7;
     }
 
 }

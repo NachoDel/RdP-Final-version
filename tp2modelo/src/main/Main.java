@@ -157,6 +157,8 @@ public class Main {
         // Mostrar métricas de políticas
         System.out.println("Picked 2: " + policy.getPicked2());
         System.out.println("Picked 3: " + policy.getPicked3());
+        System.out.println("Picked 6: " + policy.getPicked6());
+        System.out.println("Picked 7: " + policy.getPicked7());
     }
     
 }
