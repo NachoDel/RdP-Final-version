@@ -1,7 +1,3 @@
-package interfaces;
-
-import main.Rdp;
-
 public interface MonitorInterface {
 
     //Por ser interfaz, debe incluir solo los metodos publicos de Monitor.java
