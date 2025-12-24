@@ -197,8 +197,21 @@ public class Main {
             Thread.currentThread().interrupt();
             // manejar interrupción si es necesario
         }
-    System.out.println("Picked 2: " + policy.getPicked2());
-    System.out.println("Picked 3: " + policy.getPicked3());
+        // Esperar también al hilo del logger
+        try {
+            logThread.join();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+
+        // Escribir tiempo total en el log y en consola
+        Log.getInstance().writeTotalTimeAndPrint();
+
+        // Mostrar métricas de políticas
+        System.out.println("Picked 2: " + policy.getPicked2());
+        System.out.println("Picked 3: " + policy.getPicked3());
+        System.out.println("Picked 6: " + policy.getPicked6());
+        System.out.println("Picked 7: " + policy.getPicked7());
     }
     
 }
